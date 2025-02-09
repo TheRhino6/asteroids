@@ -12,3 +12,4 @@ PLAYER_RADIUS = 20
 PLAYER_COLOUR = (255, 255, 255)  # white
 
 PLAYER_TURN_SPEED = 300  # degrees per second
+PLAYER_SPEED = 200  # pixels per second
