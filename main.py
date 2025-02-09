@@ -3,6 +3,7 @@
 # throughout this file
 import pygame
 from constants import *
+from player import *
 
 # This is the main function that runs the game
 
@@ -17,6 +18,8 @@ def main():
     clock = pygame.time.Clock()
     dt = 0
 
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+
     # This is the main game loop
     while True:
         for event in pygame.event.get():
@@ -25,6 +28,7 @@ def main():
                 return
 
         screen.fill(BACKGROUND_COLOUR)
+        player.draw(screen)
         pygame.display.flip()
         dt = clock.tick(60) / 1000
 
