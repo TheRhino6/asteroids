@@ -37,8 +37,24 @@ class Player(CircleShape):
         if keys[pygame.K_d]:
             self.rotate(dt)
         if keys[pygame.K_w]:
+            if self.position.x < 0:
+                self.position.x = SCREEN_WIDTH
+            elif self.position.x > SCREEN_WIDTH:
+                self.position.x = 0
+            if self.position.y < 0:
+                self.position.y = SCREEN_HEIGHT
+            elif self.position.y > SCREEN_HEIGHT:
+                self.position.y = 0
             self.move(dt)
         if keys[pygame.K_s]:
+            if self.position.x < 0:
+                self.position.x = SCREEN_WIDTH
+            elif self.position.x > SCREEN_WIDTH:
+                self.position.x = 0
+            if self.position.y < 0:
+                self.position.y = SCREEN_HEIGHT
+            elif self.position.y > SCREEN_HEIGHT:
+                self.position.y = 0
             self.move(-dt)
         if keys[pygame.K_SPACE]:
             if self.timer <= 0:

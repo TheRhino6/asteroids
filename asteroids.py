@@ -1,12 +1,15 @@
 import pygame
 import random
-
+from score import *
 from circleshape import *
 from constants import *
 
 class Asteroids(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
+        self.velocity = pygame.Vector2(0, 0)
+        self.position = pygame.Vector2(x, y)
+        self.radius = radius
 
     def draw(self, screen):
         pygame.draw.circle(screen, ASTEROID_COLOUR, self.position, self.radius, width=2)

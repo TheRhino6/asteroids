@@ -8,6 +8,7 @@ from player import *
 from asteroids import *
 from asteroidfield import *
 from Shot import *
+from score import *
 
 # This is the main function that runs the game
 
@@ -29,9 +30,11 @@ def main():
     Asteroids.containers = (drawable, updatable, asteroids)
     AsteroidField.containers = (updatable,)
     Shot.containers = (drawable, updatable, shots)
+    Score.containers = (drawable, updatable)
     
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     field = AsteroidField()
+    score = Score()
 
     # This is the main game loop
     while True:
@@ -42,8 +45,8 @@ def main():
 
         screen.fill(BACKGROUND_COLOUR)
         for d in drawable:
-            d.draw(screen)
-        updatable.update(dt)
+            d.draw(screen)      #draw all the drawable objects
+        updatable.update(dt)   #update all the updatable objects
         for asteroid in asteroids:
             if player.collides_with(asteroid):
                 print("Game over!")
@@ -52,6 +55,7 @@ def main():
             for shot in shots:
                 if asteroid.collides_with(shot):
                     asteroid.split()
+                    score.hit()
                     shot.kill()
         pygame.display.flip()
         dt = clock.tick(60) / 1000
