@@ -14,3 +14,7 @@ PLAYER_COLOUR = (255, 255, 255)  # white
 
 PLAYER_TURN_SPEED = 300  # degrees per second
 PLAYER_SPEED = 200  # pixels per second
+
+SHOT_RADIUS = 5
+SHOT_COLOUR = (255, 255, 255)  # white
+PLAYER_SHOOT_SPEED = 500  # pixels per second
