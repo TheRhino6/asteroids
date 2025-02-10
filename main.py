@@ -35,6 +35,7 @@ def main():
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     field = AsteroidField()
     score = Score()
+    Asteroids.score = score
 
     # This is the main game loop
     while True:
@@ -55,7 +56,6 @@ def main():
             for shot in shots:
                 if asteroid.collides_with(shot):
                     asteroid.split()
-                    score.hit()
                     shot.kill()
         pygame.display.flip()
         dt = clock.tick(60) / 1000

@@ -1,10 +1,11 @@
 import pygame
 import random
-from score import *
 from circleshape import *
 from constants import *
 
 class Asteroids(CircleShape):
+    score = None
+
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
         self.velocity = pygame.Vector2(0, 0)
@@ -20,6 +21,7 @@ class Asteroids(CircleShape):
     def split(self):
         self.kill()
         if self.radius <= ASTEROID_MIN_RADIUS:
+            self.score.hit()
             return
         else:
             rand_angle = random.uniform(20, 50)
