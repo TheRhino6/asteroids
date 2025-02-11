@@ -9,56 +9,17 @@ from asteroids import *
 from asteroidfield import *
 from Shot import *
 from score import *
+from game import *
 
 # This is the main function that runs the game
 
 def main():
-    #initialize the pygame library
-    pygame.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    print("Starting asteroids!")
-
-    clock = pygame.time.Clock()
-    dt = 0
+    game = Game()
     
-    # groups
-    updatable = pygame.sprite.Group()
-    drawable = pygame.sprite.Group()
-    asteroids = pygame.sprite.Group()
-    shots = pygame.sprite.Group()
-    Player.containers = (drawable, updatable)
-    Asteroids.containers = (drawable, updatable, asteroids)
-    AsteroidField.containers = (updatable,)
-    Shot.containers = (drawable, updatable, shots)
-    Score.containers = (drawable, updatable)
-    
-    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-    field = AsteroidField()
-    score = Score()
-    Asteroids.score = score
-
-    # This is the main game loop
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                return
-
-        screen.fill(BACKGROUND_COLOUR)
-        for d in drawable:
-            d.draw(screen)      #draw all the drawable objects
-        updatable.update(dt)   #update all the updatable objects
-        for asteroid in asteroids:
-            if player.collides_with(asteroid):
-                print("Game over!")
-                sys.exit()
-        for asteroid in asteroids:
-            for shot in shots:
-                if asteroid.collides_with(shot):
-                    asteroid.split()
-                    shot.kill()
-        pygame.display.flip()
-        dt = clock.tick(60) / 1000
+    while game.running:
+        game.handle_events()
+        game.update()
+    pygame.quit()
 
 if __name__ == "__main__":
     main()
