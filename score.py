@@ -25,7 +25,6 @@ class Score(pygame.sprite.Sprite):
         self.score += 1000
 
     def get_score(self):
-        print(f"Raw score value: {self.score}")
         return self.score
     
     def set_level(self, level): # updates level

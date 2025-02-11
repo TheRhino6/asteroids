@@ -22,3 +22,19 @@ PLAYER_SHOOT_COOLDOWN = 0.3  # seconds
 
 SCORE_RATE = 10  # points per second
 SCORE_POSITION = (10, 10)
+
+# partical canon
+PC_SHOT_RADIUS = 5
+PC_SHOT_COLOUR = (255, 255, 255)  # white
+PC_SHOOT_SPEED = 500  # pixels per second
+PC_SHOOT_COOLDOWN = 0.3  # seconds
+
+# rail gun
+SHOT_RADIUS = 5
+SHOT_COLOUR = (255, 255, 255)  # white
+PLAYER_SHOOT_SPEED = 500  # pixels per second
+PLAYER_SHOOT_COOLDOWN = 0.3  # seconds
+
+# bomb
+
+# Gauss canon

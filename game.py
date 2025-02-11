@@ -15,6 +15,8 @@ class Game:
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.running = True
+
+        # Game variables
         self.level = 1
         
         # Sprite groups
@@ -32,7 +34,7 @@ class Game:
 
         # Create game objects
         self.player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
-        self.field = AsteroidField()
+        self.field = AsteroidField(self)
         self.score = Score()
         Asteroids.score = self.score
 
@@ -67,8 +69,9 @@ class Game:
     def check_level_progression(self):
         current_score = self.score.get_score()
         threshold = self.level * self.level * 10000
-        print(f"Current score: {current_score}, Threshold: {threshold}, Level: {self.level}")
+        
+        # level up if score is greater than threshold
         if current_score >= threshold:
             self.level += 1
             self.score.set_level(self.level)
-            print(f"Level up! New level: {self.level}")
+            print(f"Level up! {self.level}")
