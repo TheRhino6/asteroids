@@ -17,6 +17,7 @@ def main():
 
         screen.fill(BACKGROUND_COLOUR)
         player.draw(screen)
+        player.update(dt)
         pygame.display.flip()
 
         dt = clock.tick(60)/1000 # limit frames to 60 FPS
