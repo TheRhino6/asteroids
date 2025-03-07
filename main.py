@@ -4,7 +4,9 @@ from constants import *
 def main():
     pygame.init()
     print ("Starting Asteroids!")
-    screen = pygame.display.set_mode(size=(SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    clock = pygame.time.Clock()
+    dt = 0
 
     while True:
         for event in pygame.event.get():
@@ -13,6 +15,8 @@ def main():
 
         screen.fill(BACKGROUND_COLOUR)
         pygame.display.flip()
+
+        dt = clock.tick(60)/1000 # limit frames to 60 FPS
 
 if __name__ == "__main__":
     main()
