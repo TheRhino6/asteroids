@@ -9,6 +9,8 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.timer = 0
+        self.jump_timer = 0
+        self.speed = PLAYER_SPEED
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -19,17 +21,28 @@ class Player(CircleShape):
         return [a, b, c]
     
     def draw(self, screen):
-        pygame.draw.polygon(screen, PLAYER_COLOUR, self.triangle(), 2)
+        pygame.draw.polygon(screen, PLAYER_COLOUR, self.triangle(), 0)
 
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
 
     def move(self, dt):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
-        self.position += forward * PLAYER_SPEED * dt
+        if self.jump_timer > PLAYER_JUMP_COOLDOWN - 0.1:
+            self.position += forward * PLAYER_SPEED * PLAYER_JUMP_RATIO * dt #jump speed
+        self.position += forward * PLAYER_SPEED * dt #normal speed
+        if self.position.x >= SCREEN_WIDTH:
+            self.position.x = 0
+        elif self.position.x <= 0:
+            self.position.x = SCREEN_WIDTH
+        elif self.position.y >= SCREEN_HEIGHT:
+            self.position.y = 0
+        elif self.position.y <= 0:
+            self.position.y = SCREEN_HEIGHT
 
     def update(self, dt):
         self.timer -= dt
+        self.jump_timer -= dt
 
         keys = pygame.key.get_pressed()
 
@@ -44,6 +57,9 @@ class Player(CircleShape):
         if keys[pygame.K_SPACE]:
             if self.timer <= 0:
                 self.shoot()
+        if keys[pygame.K_LSHIFT]:
+            if self.jump_timer <= 0:
+                self.jump()
         if keys[pygame.K_ESCAPE]:
             print ("forced quit with key press")
             sys.exit()
@@ -52,4 +68,8 @@ class Player(CircleShape):
         self.timer = PLAYER_SHOOT_COOLDOWN
         bullet = Shot(self.position.x, self.position.y)
         bullet.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
+
+    def jump(self):
+        self.jump_timer = PLAYER_JUMP_COOLDOWN
+
 

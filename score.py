@@ -22,3 +22,7 @@ class Score(pygame.sprite.Sprite):
     def asteroid_kill_score(self):
         self.score += 1000
         self.update_image()
+
+    def asteroid_split_score(self):
+        self.score += 10
+        self.update_image()
