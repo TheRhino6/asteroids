@@ -5,6 +5,7 @@ from player import Player
 from asteroids import Asteroids
 from asteroidfield import AsteroidField
 from shot import Shot
+from score import Score
 
 def main():
     # initialise code
@@ -12,22 +13,26 @@ def main():
     print ("Starting Asteroids!")
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
+    pygame.display.set_caption("Asteroids 2.0")
 
     # Create containers
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
+    score = pygame.sprite.Group()
 
     # Assign to containers
     Player.containers = (updatable, drawable)
     Asteroids.containers = (updatable, drawable, asteroids)
     AsteroidField.containers = updatable
     Shot.containers = (updatable, drawable, shots)
+    Score.containers = (updatable, drawable, score)
 
     dt = 0
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     asteroid_field = AsteroidField()
+    score_display = Score()
 
     # game loop
     while True:
@@ -36,6 +41,9 @@ def main():
                 return
             
         updatable.update(dt)
+
+        score_display.update(dt)
+        score_display.draw(screen)
 
         for asteroid in asteroids:
             if player.collision(asteroid):
