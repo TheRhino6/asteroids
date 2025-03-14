@@ -1,4 +1,5 @@
 import pygame
+import sys
 from circleshape import *
 from constants import *
 from shot import Shot
@@ -43,6 +44,9 @@ class Player(CircleShape):
         if keys[pygame.K_SPACE]:
             if self.timer <= 0:
                 self.shoot()
+        if keys[pygame.K_ESCAPE]:
+            print ("forced quit with key press")
+            sys.exit()
 
     def shoot(self):
         self.timer = PLAYER_SHOOT_COOLDOWN
