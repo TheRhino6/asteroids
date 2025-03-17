@@ -8,6 +8,7 @@ from shot import Shot
 from score import Score
 from level import Level
 from lives import Lives
+from shield import Shield
 
 def main():
     # initialise code
@@ -25,6 +26,7 @@ def main():
     score = pygame.sprite.Group()
     level = pygame.sprite.Group()
     life = pygame.sprite.Group()
+    shield = pygame.sprite.Group()
 
     # Assign to containers
     Player.containers = (updatable, drawable)
@@ -34,6 +36,7 @@ def main():
     Score.containers = (updatable, drawable, score)
     Level.containers = (drawable, level)
     Lives.containers = (updatable, drawable, life)
+    Shield.containers = (drawable, shield)
 
     dt = 0
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
@@ -50,6 +53,7 @@ def main():
             
         updatable.update(dt)
         level_display.update(dt, score_display.score)
+        shield.update(dt, player.position)
 
         for asteroid in asteroids:
             if player.collision(asteroid):

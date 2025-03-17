@@ -3,6 +3,7 @@ import sys
 from circleshape import *
 from constants import *
 from shot import Shot
+from shield import Shield
 
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -15,6 +16,7 @@ class Player(CircleShape):
         self.flash_timer = 0
         self.flash_duration = 1.5 # seconds
         self.visible = True
+        self.shield_timer = 0
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -69,6 +71,8 @@ class Player(CircleShape):
         if keys[pygame.K_LSHIFT]:
             if self.jump_timer <= 0:
                 self.jump()
+        if keys[pygame.K_q]:
+            self.shield()
         if keys[pygame.K_ESCAPE]:
             print ("forced quit with key press")
             sys.exit()
@@ -96,3 +100,7 @@ class Player(CircleShape):
     def hit(self):
         self.is_hit = True
         self.flash_timer = 0
+
+    def shield(self):
+        self.shield_timer = 0.5
+        shield = Shield(self.position.x, self.position.y)
