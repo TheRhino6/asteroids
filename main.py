@@ -7,6 +7,7 @@ from asteroidfield import AsteroidField
 from shot import Shot
 from score import Score
 from level import Level
+from lives import Lives
 
 def main():
     # initialise code
@@ -23,6 +24,7 @@ def main():
     shots = pygame.sprite.Group()
     score = pygame.sprite.Group()
     level = pygame.sprite.Group()
+    life = pygame.sprite.Group()
 
     # Assign to containers
     Player.containers = (updatable, drawable)
@@ -31,12 +33,14 @@ def main():
     Shot.containers = (updatable, drawable, shots)
     Score.containers = (updatable, drawable, score)
     Level.containers = (drawable, level)
+    Lives.containers = (updatable, drawable, life)
 
     dt = 0
     player = Player(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
     asteroid_field = AsteroidField()
     score_display = Score()
     level_display = Level()
+    life_display = Lives()
 
     # game loop
     while True:
@@ -49,8 +53,13 @@ def main():
 
         for asteroid in asteroids:
             if player.collision(asteroid):
-                print ("Game over!")
-                sys.exit()
+                if life_display.lives <= 1:
+                    print (f"Game over! Final Score: {score_display.score}")
+                    sys.exit()
+                else:
+                    life_display.lose_life()
+                    asteroid.kill()
+                    player.hit()
 
             for shot in shots:
                 if shot.collision(asteroid):

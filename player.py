@@ -11,6 +11,10 @@ class Player(CircleShape):
         self.timer = 0
         self.jump_timer = 0
         self.speed = PLAYER_SPEED
+        self.is_hit = False
+        self.flash_timer = 0
+        self.flash_duration = 1.5 # seconds
+        self.visible = True
 
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -21,7 +25,9 @@ class Player(CircleShape):
         return [a, b, c]
     
     def draw(self, screen):
-        pygame.draw.polygon(screen, PLAYER_COLOUR, self.triangle(), 0)
+        if self.visible:
+            pygame.draw.polygon(screen, PLAYER_COLOUR, self.triangle(), 0)
+            #screen.blit(self.image, self.rect)
 
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
@@ -30,7 +36,10 @@ class Player(CircleShape):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         if self.jump_timer > PLAYER_JUMP_COOLDOWN - 0.1:
             self.position += forward * PLAYER_SPEED * PLAYER_JUMP_RATIO * dt #jump speed
+
         self.position += forward * PLAYER_SPEED * dt #normal speed
+
+        # screen wrap
         if self.position.x >= SCREEN_WIDTH:
             self.position.x = 0
         elif self.position.x <= 0:
@@ -64,6 +73,18 @@ class Player(CircleShape):
             print ("forced quit with key press")
             sys.exit()
 
+        if self.is_hit:
+            self.flash_timer += dt
+            if int(self.flash_timer * 10) % 2 == 0:
+                self.visible = True
+            else:
+                self.visible = False
+
+            if self.flash_timer >= self.flash_duration:
+                self.is_hit = False
+                self.flash_timer = 0
+                self.visible = True
+
     def shoot(self):
         self.timer = PLAYER_SHOOT_COOLDOWN
         bullet = Shot(self.position.x, self.position.y)
@@ -72,4 +93,6 @@ class Player(CircleShape):
     def jump(self):
         self.jump_timer = PLAYER_JUMP_COOLDOWN
 
-
+    def hit(self):
+        self.is_hit = True
+        self.flash_timer = 0

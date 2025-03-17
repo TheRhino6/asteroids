@@ -15,16 +15,16 @@ class Asteroids(CircleShape):
 
     def update(self, dt):
         self.life_timer += dt
-        if self.position.x + self.radius >= SCREEN_WIDTH and self.life_timer >= 2 and self.bounce_count <= 3:
+        if self.position.x + self.radius >= SCREEN_WIDTH and self.life_timer >= 2 and self.bounce_count <= ASTEROID_MAX_BOUNCE:
             self.velocity.x *= -ASTEROID_BOUNCE_RATIO
             self.bounce_count += 1
-        elif self.position.x + self.radius <= 0 and self.life_timer >= 2 and self.bounce_count <= 3:
+        elif self.position.x + self.radius <= 0 and self.life_timer >= 2 and self.bounce_count <= ASTEROID_MAX_BOUNCE:
             self.velocity.x *= -ASTEROID_BOUNCE_RATIO
             self.bounce_count += 1
-        elif self.position.y + self.radius >= SCREEN_HEIGHT and self.life_timer >= 2 and self.bounce_count <= 3:
+        elif self.position.y + self.radius >= SCREEN_HEIGHT and self.life_timer >= 2 and self.bounce_count <= ASTEROID_MAX_BOUNCE:
             self.velocity.y *= -ASTEROID_BOUNCE_RATIO
             self.bounce_count += 1
-        elif self.position.y + self.radius <= 0 and self.life_timer >= 2 and self.bounce_count <= 3:
+        elif self.position.y + self.radius <= 0 and self.life_timer >= 2 and self.bounce_count <= ASTEROID_MAX_BOUNCE:
             self.velocity.y *= -ASTEROID_BOUNCE_RATIO
             self.bounce_count += 1
         
